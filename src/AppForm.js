@@ -3,17 +3,21 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
+const defaultPrompts = [
+  "On a clear and sunny day...",
+  "The first thing I do when I get home is...",
+  "Don't you think that...",
+  "The answer to life is...",
+  "The craziest thing that ever happened to me was..."
+];
+
+var randomPrompt = defaultPrompts[Math.floor(Math.random()*defaultPrompts.length)];
+
 export default function AppForm(props) {
 
-  const setField1 = (event) => {
+  const setText = (event) => {
     props.updater(
-      {   ...props.state, field1Value: event.target.value }
-    );
-  };
-
-  const setField2 = (event) => {
-    props.updater(
-      {   ...props.state, field2Value: event.target.value }
+      {   ...props.state, text: event.target.value }
     );
   };
 
@@ -24,39 +28,28 @@ export default function AppForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Fill out this form:
+        Enter some text to be analyzed for keywords:
       </Typography>
       <ValidatorForm
           onError={errors => console.log(errors)}
           onSubmit={onSubmit}
       >
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-            <TextValidator
-                label="Text field 1"
-                placeholder="Placeholder"
-                onChange={setField1}
-                name="aField"
-                value={props.state.field1Value}
-                validators={['required']}
-                errorMessages={['This field is required!']}
-                variant="outlined"
-                required
-            />
-        </Grid>
-        <Grid item xs={12} md={6}>
-            <TextValidator
-                label="Text field 2"
-                placeholder="Placeholder"
-                onChange={setField2}
-                name="aField2"
-                value={props.state.field2Value}
-                validators={['required']}
-                errorMessages={['This field is required!']}
-                variant="outlined"
-                required
-            />
-
+        <Grid item xs={12} md={12}>
+          <TextValidator
+            fullWidth
+            label="Enter some text:"
+            multiline
+            rows={4}
+            placeholder={randomPrompt}
+            onChange={setText}
+            name="text"
+            value={props.state.text}
+            validators={['required']}
+            errorMessages={['This field is required!']}
+            variant="outlined"
+            color="secondary"
+          />
         </Grid>
       </Grid>
       </ValidatorForm>

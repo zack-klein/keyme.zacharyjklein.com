@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 data "aws_acm_certificate" "web_cert" {
-  domain      = "keyme.zacharyjklein.com"
+  domain      = "zacharyjklein.com"
   most_recent = true
 }
 
